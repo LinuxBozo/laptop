@@ -51,15 +51,15 @@ if toolversion git '>=' 2.9.1; then
   SEEKRET_RULES="${SEEKRET_RULES:=$SEEKRET_DEFAULT_RULES}"
   for rule in ${SEEKRET_RULES}
   do
-      printf "$rule: "
-      (cd ${SEEKRET_RULES_PATH} \
+      printf "%s: " "$rule"
+      (cd "${SEEKRET_RULES_PATH}" \
 	  && curl -# -o "${rule}" "${SEEKRET_RULES_URL}/${rule}")
   done
   fancy_echo "Configuring Seekret"
   mkdir -p "${HOME}/.git-support/hooks"
   git config --global core.hooksPath "${HOME}/.git-support/hooks"
   git seekret --global config --init
-  # TODO: enable rules here...
+  # Activate all installed rules
   git seekret --global hook --enable-all
 
   fancy_echo "Finished installing Seekret"
